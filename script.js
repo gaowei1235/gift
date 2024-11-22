@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentQuestion = 1;
     let incorrectAttempts = 0;
 
-    const photos = Array.from({ length: 29 }, (_, i) => `assets/photo${i + 1}.jpg`);
+    const photos = Array.from({ length: 29 }, (_, i) => `asset/photo${i + 1}.jpg`);
     let currentPhotoIndex = 0;
 
     // 点击开始按钮，显示聊天框并发送第一个问题
