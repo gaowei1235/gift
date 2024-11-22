@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="greeting">☠️ 神秘包裹 😨</h1>
+        <button id="start-btn">拆开看看</button>
+        <div id="chat-box" class="hidden">
+            <div id="messages"></div>
+            <div id="input-area">
+                <input type="text" id="user-input" placeholder="Say something...">
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+        <div id="photo-gallery" class="hidden"></div>
+        <div id="final-message" class="hidden"></div>
+    </div>
+    <!-- 音乐文件 -->
+    <audio id="welcome-music" src="assets/happy-birthday.mp3" autoplay loop></audio>
+    <audio id="gallery-music" src="assets/music.mp3"></audio>
+    <audio id="final-music" src="assets/final.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>

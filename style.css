@@ -1,0 +1,237 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+    animation: gradient 5s infinite;
+    overflow: hidden;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 页面爆炸动画 */
+@keyframes explode {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+        background-color: rgba(0, 0, 0, 1);
+    }
+}
+
+body.explode {
+    animation: explode 2s forwards;
+    overflow: hidden; /* 防止爆炸后页面内容溢出 */
+    background-color: rgba(0, 0, 0, 1); /* 最终背景颜色是黑色 */
+}
+
+.container {
+    text-align: center;
+    color: white;
+    width: 90%;
+    max-width: 500px;
+}
+
+#start-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background: #ffffff;
+    color: #ff6363;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: 0.3s ease;
+}
+
+#start-btn:hover {
+    background: #ff6363;
+    color: white;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#chat-box {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    max-height: 400px;
+    overflow-y: auto; /* 保证超出部分可以滚动 */
+}
+
+#chat-box.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.chat-bubble {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin: 8px 0;
+    font-size: 16px;
+    word-wrap: break-word;
+    background-color: #f1f1f1;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.user-chat {
+    background-color: #3e8e41;
+    color: white;
+    align-self: flex-end; /* 用户消息靠右 */
+    text-align: right; /* 用户消息内容对齐右侧 */
+}
+
+.bot-chat {
+    background-color: #4e6ee1;
+    color: white;
+    align-self: flex-start; /* 电脑消息靠左 */
+    text-align: left; /* 电脑消息内容对齐左侧 */
+}
+
+#input-area {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    width: 100%;
+}
+
+#user-input {
+    padding: 10px;
+    width: 80%;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+}
+
+#send-btn {
+    padding: 10px;
+    background: #ff6363;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#send-btn:hover {
+    background: #ff4f4f;
+}
+
+#photo-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out;
+}
+
+#photo-gallery.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#photo-gallery img {
+    max-width: 90vw;  /* 限制图片最大宽度为90%视口宽度 */
+    max-height: 90vh;  /* 限制图片最大高度为90%视口高度 */
+    object-fit: contain;  /* 保持图片比例 */
+    margin: 0;
+    position: absolute;  /* 使图片完全重叠 */
+    opacity: 0; /* 初始透明度为0，确保图片淡入效果 */
+    transition: opacity 1s ease-in-out;  /* 图片淡入效果 */
+}
+
+#photo-gallery img.show {
+    opacity: 1;  /* 图片淡入 */
+}
+.typing-text {
+    font-size: 24px;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    border-right: 4px solid white; /* 打字光标效果 */
+    padding: 10px 0;
+}
+
+#photo-gallery.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1s ease-in-out;
+}
+
+#photo-gallery img {
+    max-width: 90vw;  /* 限制图片最大宽度为90%视口宽度 */
+    max-height: 90vh;  /* 限制图片最大高度为90%视口高度 */
+    object-fit: contain;  /* 保持图片比例 */
+    margin: 0;
+    position: absolute;  /* 使图片完全重叠 */
+    opacity: 0; /* 初始透明度为0，确保图片淡入效果 */
+    transition: opacity 1s ease-in-out;  /* 图片淡入效果 */
+}
+
+#photo-gallery img.show {
+    opacity: 1;  /* 图片淡入 */
+}
+#final-message {
+    visibility: hidden;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 1s ease-in-out, background-color 1s ease-in-out;
+}
+
+#final-message.active {
+    visibility: visible;
+    opacity: 1;
+    background-color: #ffc0cb; /* 粉红色背景 */
+    color: white;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
