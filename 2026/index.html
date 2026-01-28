@@ -2,30 +2,29 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>2026 · 生日</title>
+  <title>2026 · 生日档案馆</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- 顶部栏 -->
   <div class="top-bar">
     <a href="../index.html">← 返回</a>
-    <span>2026</span>
+    <span>2026 · 送给高岩的歌</span>
   </div>
 
-  <!-- 照片墙 -->
   <div id="photo-wall">
-    <div class="photo-track"></div>
+    <div class="photo-track">
+      </div>
+    <div class="drag-hint">← 左右拖拽回顾 · 自动巡航中 →</div>
   </div>
 
-  <!-- 背景音乐 -->
-  <audio
-    id="bgm"
-    src="asset/music.mp3"
-    autoplay
-    loop
-  ></audio>
+  <div id="end-text-container" style="display: none; opacity: 0;">
+    <div id="typewriter-text"></div>
+  </div>
+
+  <audio id="bgm" src="asset/music.mp3" autoplay loop></audio>
 
   <script src="script.js"></script>
 </body>
