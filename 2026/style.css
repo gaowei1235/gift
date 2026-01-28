@@ -56,7 +56,7 @@ body {
   gap: 18px;
   height: 100%;
   padding: 0 10vw;
-  animation: scrollPhotos 80s linear infinite;
+  animation: scrollPhotos 35s linear infinite;
 }
 
 /* 单张照片 */
