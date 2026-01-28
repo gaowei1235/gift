@@ -5,10 +5,11 @@
 }
 
 body {
-  background: #000;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-               "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+  font-family: "Noto Serif SC", serif;
   overflow: hidden;
+  height: 100vh;
+  color: #fff;
 }
 
 /* 顶部栏 */
@@ -17,84 +18,113 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 56px;
-  padding: 0 24px;
+  height: 60px;
+  padding: 0 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 10;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.6),
-    rgba(0,0,0,0)
-  );
-  color: #fff;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
   font-size: 14px;
+  letter-spacing: 2px;
+  transition: opacity 1s ease;
 }
 
 .top-bar a {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
-  opacity: 0.7;
 }
 
-.top-bar a:hover {
-  opacity: 1;
-}
-
-/* 照片墙容器 */
+/* 照片墙 */
 #photo-wall {
   position: fixed;
   inset: 0;
-  overflow: hidden;
+  cursor: grab;
+  transition: opacity 2s ease;
 }
 
-/* 横向轨道 */
+#photo-wall:active {
+  cursor: grabbing;
+}
+
 .photo-track {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 40px;
   height: 100%;
-  padding: 0 10vw;
-  animation: scrollPhotos 35s linear infinite;
+  padding-left: 15vw;
+  padding-right: 60vw;
+  will-change: transform;
 }
 
-/* 单张照片 */
 .photo-track img {
-  height: 58vh;
+  height: 55vh;
   width: auto;
-  object-fit: contain;
-  flex-shrink: 0;
-  border-radius: 10px;
-  filter: brightness(0.95);
-  transition: transform 0.4s ease, filter 0.4s ease;
+  border-radius: 15px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  filter: brightness(0.8);
+  transition: transform 0.5s ease, filter 0.5s ease;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* 轻微错落 */
-.photo-track img:nth-child(3n) {
-  height: 52vh;
-}
-.photo-track img:nth-child(4n) {
-  height: 64vh;
-}
+/* 错落效果 */
+.photo-track img:nth-child(even) { transform: translateY(-5vh); }
+.photo-track img:nth-child(odd) { transform: translateY(5vh); }
 
-/* 悬停效果 */
 .photo-track img:hover {
-  transform: scale(1.03);
-  filter: brightness(1.05);
+  transform: scale(1.08) translateY(0) !important;
+  filter: brightness(1.1);
+  z-index: 10;
 }
 
-/* 悬停暂停整体滚动 */
-#photo-wall:hover .photo-track {
-  animation-play-state: paused;
+/* 提示文字 */
+.drag-hint {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+  opacity: 0.4;
+  font-size: 12px;
+  letter-spacing: 4px;
+  pointer-events: none;
 }
 
-/* 动画 */
-@keyframes scrollPhotos {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+/* 结尾文字 */
+#end-text-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #090a0f;
+  z-index: 200;
+  transition: opacity 3s ease;
 }
+
+#typewriter-text {
+  font-size: 1.25rem;
+  line-height: 2.2;
+  text-align: center;
+  max-width: 85%;
+  white-space: pre-wrap;
+  text-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+/* 打字机单字动画 */
+@keyframes fadeChar {
+  from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+.char {
+  display: inline-block;
+  opacity: 0;
+  animation: fadeChar 0.8s forwards;
+}
+
+.fade-out { opacity: 0 !important; }
