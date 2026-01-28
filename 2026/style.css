@@ -78,13 +78,13 @@ body {
   height: 64vh;
 }
 
-/* 悬停时的细节 */
+/* 悬停效果 */
 .photo-track img:hover {
   transform: scale(1.03);
   filter: brightness(1.05);
 }
 
-/* 悬停整体暂停 */
+/* 悬停暂停整体滚动 */
 #photo-wall:hover .photo-track {
   animation-play-state: paused;
 }
