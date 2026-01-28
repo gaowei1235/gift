@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* 2. 滚动控制核心变量 */
   let currentScroll = 0;   // 画面当前的位移
   let targetScroll = 0;    // 目标位移（由于拖拽或自动播放改变）
-  let autoSpeed = -2.0;    // 【速度设置】负数向左跑，4.0 是较快的速度
+  let autoSpeed = -1.0;    // 【速度设置】负数向左跑，4.0 是较快的速度
   let isDragging = false;
   let lastX = 0;
   let maxScroll = 0;
