@@ -75,34 +75,44 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('touchmove', e => onMove(e.touches[0].clientX), {passive: true});
   window.addEventListener('touchend', onEnd);
 
-  /* 4. 音乐循环逻辑（彻底解决倍速问题） */
+  /* --- 找到 script.js 中关于音乐的部分，替换为以下逻辑 --- */
+  
   const playlist = ["asset/music.mp3", "asset/music2.mp3"];
-  let trackIdx = 0;
-
-  // 核心修复函数：确保音频属性纯净
+  let trackIdx = 0; // 确保初始索引是 0
+  
   function playTrack() {
-    bgm.pause(); // 先停止当前播放
+    bgm.pause();
+    // 核心：每次播放前重新强制设置 src
     bgm.src = playlist[trackIdx];
-    bgm.load(); // 重新加载资源
+    bgm.load(); 
+    
     bgm.oncanplaythrough = () => {
-      bgm.playbackRate = 1.0; // 强制正常倍速
+      bgm.playbackRate = 1.0; 
       bgm.defaultPlaybackRate = 1.0;
-      bgm.play().catch(err => console.log("播放被拦截:", err));
+      bgm.play().catch(err => console.log("播放尝试中..."));
+      // 播放后清除监听，防止重复触发
+      bgm.oncanplaythrough = null;
     };
   }
-
+  
+  // 监听歌曲结束，自动切下一首
   bgm.addEventListener("ended", () => {
     trackIdx = (trackIdx + 1) % playlist.length;
     playTrack();
   });
-
-  // 用户点击后启动，解决浏览器限制
+  
+  // 统一启动函数
   const startMusic = () => {
+    trackIdx = 0; // 再次强制从第一首开始
     bgm.volume = 0.5;
     playTrack();
+    
+    // 移除所有启动监听
     document.removeEventListener("click", startMusic);
     document.removeEventListener("touchstart", startMusic);
   };
+  
+  // 同时监听点击和触摸
   document.addEventListener("click", startMusic);
   document.addEventListener("touchstart", startMusic);
 
