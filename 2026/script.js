@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2000);
   }
 
+  /* 只需要替换 script.js 里的 playTypewriter 函数部分 */
   function playTypewriter() {
     let i = 0;
     function next() {
@@ -127,6 +128,14 @@ document.addEventListener("DOMContentLoaded", () => {
           typewriterText.appendChild(s);
         }
         i++;
+
+        // --- 新增：自动跟随滚动 ---
+        // 每次打字时，让容器滚动到最底部
+        endContainer.scrollTo({
+          top: endContainer.scrollHeight,
+          behavior: 'smooth' // 平滑滚动
+        });
+
         let d = 110;
         if (char === "，") d = 450;
         if (char === "。" || char === "\n") d = 750;
