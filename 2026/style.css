@@ -1,3 +1,6 @@
+/* ================================================= */
+/* 1. 基础重置与背景 */
+/* ================================================= */
 * {
   margin: 0;
   padding: 0;
@@ -5,14 +8,17 @@
 }
 
 body {
-  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+  /* 梦幻深色渐变背景 */
+  background: radial-gradient(circle at center, #1b2735 0%, #050505 100%);
   font-family: "Noto Serif SC", serif;
-  overflow: hidden;
+  overflow: hidden; /* 防止照片墙阶段出现滚动条 */
   height: 100vh;
   color: #fff;
 }
 
-/* 顶部栏 */
+/* ================================================= */
+/* 2. 顶部导航栏 */
+/* ================================================= */
 .top-bar {
   position: fixed;
   top: 0;
@@ -26,15 +32,21 @@ body {
   z-index: 100;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   font-size: 14px;
   letter-spacing: 2px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: opacity 1s ease;
 }
 
-.top-bar a { color: rgba(255, 255, 255, 0.6); text-decoration: none; }
+.top-bar a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+}
 
-/* 照片墙：炫酷效果回归 */
+/* ================================================= */
+/* 3. 照片墙阶段 - 找回炫酷效果 */
+/* ================================================= */
 #photo-wall {
   position: fixed;
   inset: 0;
@@ -42,7 +54,9 @@ body {
   transition: opacity 2s ease;
 }
 
-#photo-wall:active { cursor: grabbing; }
+#photo-wall:active {
+  cursor: grabbing;
+}
 
 .photo-track {
   position: absolute;
@@ -50,7 +64,7 @@ body {
   left: 0;
   display: flex;
   align-items: center;
-  gap: 50px; /* 间距加大更显高级 */
+  gap: 50px;
   height: 100%;
   padding-left: 20vw;
   padding-right: 60vw;
@@ -61,27 +75,37 @@ body {
   height: 52vh;
   width: auto;
   border-radius: 12px;
-  box-shadow: 0 15px 45px rgba(0,0,0,0.6);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
   filter: brightness(0.8) contrast(1.1);
+  /* 使用平滑的贝塞尔曲线 */
   transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
   user-select: none;
   -webkit-user-drag: none;
 }
 
-/* --- 炫酷的错落排版 --- */
-.photo-track img:nth-child(3n) { height: 45vh; transform: translateY(8vh) rotate(2deg); }
-.photo-track img:nth-child(3n+1) { height: 58vh; transform: translateY(-5vh) rotate(-1deg); }
-.photo-track img:nth-child(3n+2) { height: 50vh; transform: translateY(2vh) rotate(1deg); }
+/* 错落排版与微旋转 - 炫酷感核心 */
+.photo-track img:nth-child(3n) {
+  height: 45vh;
+  transform: translateY(8vh) rotate(2deg);
+}
+.photo-track img:nth-child(3n+1) {
+  height: 58vh;
+  transform: translateY(-5vh) rotate(-1deg);
+}
+.photo-track img:nth-child(3n+2) {
+  height: 50vh;
+  transform: translateY(2vh) rotate(1deg);
+}
 
-/* --- 炫酷的悬停互动 --- */
+/* 悬停增强 */
 .photo-track img:hover {
   transform: scale(1.15) translateY(0) rotate(0deg) !important;
   filter: brightness(1.1) contrast(1);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.2);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.2);
   z-index: 100;
 }
 
-/* 提示文字 */
+/* 底部操作提示 */
 .drag-hint {
   position: absolute;
   bottom: 40px;
@@ -93,31 +117,47 @@ body {
   pointer-events: none;
 }
 
-/* 结尾文字容器 */
+/* ================================================= */
+/* 4. 结尾打字机阶段 - 修复挡住与闪烁问题 */
+/* ================================================= */
 #end-text-container {
   position: fixed;
   inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* 关键：改为 block 允许内容在移动端向下延伸 */
+  display: block; 
   background: radial-gradient(circle at center, #1b2735 0%, #050505 100%);
   z-index: 200;
   transition: opacity 3s ease;
+  /* 允许滚动 */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* 上下留出充足空间，防止第一句和最后一句贴边 */
+  padding: 100px 24px; 
 }
 
 #typewriter-text {
-  font-size: 1.3rem;
+  /* 响应式字体：手机端稍小，大屏端正常 */
+  font-size: clamp(1rem, 4vw, 1.3rem); 
   line-height: 2.4;
   text-align: center;
-  max-width: 80%;
+  max-width: 650px;
+  margin: 0 auto;
   white-space: pre-wrap;
   color: #e0e0e0;
+  /* 柔和阴影，不使用滤镜以防闪烁 */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* --- 稳定的文字显示动画 --- */
+/* 稳定的文字浮现动画：只调节透明度和微小位移 */
 @keyframes steadyFadeUp {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .char {
@@ -127,4 +167,14 @@ body {
   will-change: opacity, transform;
 }
 
-.fade-out { opacity: 0 !important; }
+/* 辅助类 */
+.fade-out {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* 隐藏滚动条但保留滚动功能（可选，让界面更干净） */
+#end-text-container::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
