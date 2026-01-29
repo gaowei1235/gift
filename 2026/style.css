@@ -44,9 +44,7 @@ body {
   transition: opacity 2s ease;
 }
 
-#photo-wall:active {
-  cursor: grabbing;
-}
+#photo-wall:active { cursor: grabbing; }
 
 .photo-track {
   position: absolute;
@@ -72,15 +70,8 @@ body {
   -webkit-user-drag: none;
 }
 
-/* 错落效果 */
 .photo-track img:nth-child(even) { transform: translateY(-5vh); }
 .photo-track img:nth-child(odd) { transform: translateY(5vh); }
-
-.photo-track img:hover {
-  transform: scale(1.08) translateY(0) !important;
-  filter: brightness(1.1);
-  z-index: 10;
-}
 
 /* 提示文字 */
 .drag-hint {
@@ -94,7 +85,7 @@ body {
   pointer-events: none;
 }
 
-/* 结尾文字 */
+/* 结尾文字容器 */
 #end-text-container {
   position: fixed;
   inset: 0;
@@ -112,19 +103,20 @@ body {
   text-align: center;
   max-width: 85%;
   white-space: pre-wrap;
-  text-shadow: 0 0 15px rgba(255,255,255,0.2);
+  text-shadow: 0 0 10px rgba(255,255,255,0.1);
 }
 
-/* 打字机单字动画 */
-@keyframes fadeChar {
-  from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
-  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+/* --- 优化后的打字机动画：解决闪烁 --- */
+@keyframes fadeInSteady {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .char {
   display: inline-block;
-  opacity: 0;
-  animation: fadeChar 0.8s forwards;
+  opacity: 0; /* 初始隐藏 */
+  animation: fadeInSteady 0.6s ease-out forwards; /* 使用 forwards 保持结束状态 */
+  will-change: opacity, transform;
 }
 
 .fade-out { opacity: 0 !important; }
