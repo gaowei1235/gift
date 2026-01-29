@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* 2. 滚动控制核心（炫酷效果逻辑） */
   let currentScroll = 0;
   let targetScroll = 0;
-  let autoSpeed = -2.0; // 照片移动速度
+  let autoSpeed = -2.5; // 照片移动速度
   let isDragging = false;
   let lastX = 0;
 
